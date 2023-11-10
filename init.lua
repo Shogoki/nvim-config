@@ -1,0 +1,6 @@
+require("shogoki")
+local config_path = vim.fn.stdpath("config")
+local data_path = vim.fn.stdpath("data")
+local user_config = string.format("%s/harpoon.json", config_path)
+local cache_config = string.format("%s/harpoon.json", data_path)
+print(cache_config)
