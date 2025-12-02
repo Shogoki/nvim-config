@@ -748,10 +748,11 @@ require('lazy').setup({
         },
 
         -- Solidity
-        solidity = {
-          -- Solidity LSP for smart contract development
-          -- Requires nomicfoundation-solidity-language-server
-        },
+        -- NOTE: Commented out until you need it - requires manual npm install
+        -- solidity_ls_nomicfoundation = {
+        --   -- Solidity LSP for smart contract development
+        --   -- Install: npm install -g @nomicfoundation/solidity-language-server
+        -- },
 
         -- JavaScript/TypeScript
         ts_ls = {
