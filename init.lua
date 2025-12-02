@@ -723,9 +723,28 @@ require('lazy').setup({
                 diagnosticMode = 'workspace',
                 useLibraryCodeForTypes = true,
                 typeCheckingMode = 'basic', -- or 'strict' for stricter checks
+                -- Auto-detect virtual environments
+                venvPath = '.',
+                venv = '.venv',
               },
             },
           },
+          -- Auto-detect virtual environment on attach
+          on_attach = function(client, bufnr)
+            -- Try to find and use virtual environment
+            local util = require 'lspconfig.util'
+            local path = util.path
+
+            -- Look for .venv in current directory and parent directories
+            local root_dir = util.root_pattern('.git', 'pyproject.toml', 'setup.py', 'requirements.txt')(vim.api.nvim_buf_get_name(bufnr))
+            if root_dir then
+              local venv = path.join(root_dir, '.venv', 'bin', 'python')
+              if vim.fn.executable(venv) == 1 then
+                client.config.settings.python.pythonPath = venv
+                client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+              end
+            end
+          end,
         },
 
         -- Solidity
